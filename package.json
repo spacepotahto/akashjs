@@ -1,0 +1,26 @@
+{
+  "name": "akashjs",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://spacepotahto@github.com/spacepotahto/akashjs.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/spacepotahto/akashjs/issues"
+  },
+  "homepage": "https://github.com/spacepotahto/akashjs#readme",
+  "dependencies": {
+    "@cosmjs/proto-signing": "^0.25.4",
+    "@cosmjs/stargate": "^0.25.4",
+    "@cosmjs/tendermint-rpc": "^0.25.4",
+    "ts-proto": "^1.81.1",
+    "typescript": "^4.2.4"
+  }
+}
