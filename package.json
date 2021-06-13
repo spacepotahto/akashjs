@@ -20,7 +20,9 @@
     "@cosmjs/proto-signing": "^0.25.4",
     "@cosmjs/stargate": "^0.25.4",
     "@cosmjs/tendermint-rpc": "^0.25.4",
-    "ts-proto": "^1.81.1",
+    "ts-proto": "^1.81.1"
+  },
+  "devDependencies": {
     "typescript": "^4.2.4"
   }
 }
