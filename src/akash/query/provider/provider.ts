@@ -1,9 +1,9 @@
 import { ProtobufRpcClient } from "@cosmjs/stargate";
-import { QueryClientImpl } from "../../../codec/akash/audit/v1beta1/query";
-import Get from "./get/Get";
-import List from "./list/List";
+import { QueryClientImpl } from "../../../codec/akash/provider/v1beta1/query";
+import Get from "./get/get";
+import List from "./list/list";
 
-export default class Audit {
+export default class Provider {
   public readonly get: Get;
   public readonly list: List;
 

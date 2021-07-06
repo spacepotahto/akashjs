@@ -1,8 +1,8 @@
 import { ProtobufRpcClient } from "@cosmjs/stargate";
 import { QueryClientImpl } from "../../../codec/akash/market/v1beta1/query";
-import Bid from "./bid/Bid";
-import Lease from "./lease/Lease";
-import Order from "./order/Order";
+import Bid from "./bid/bid";
+import Lease from "./lease/lease";
+import Order from "./order/order";
 
 export default class Market {
   public readonly bid: Bid;

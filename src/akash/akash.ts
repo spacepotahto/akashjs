@@ -2,7 +2,7 @@ import { OfflineSigner } from "@cosmjs/proto-signing";
 import { StdFee } from "@cosmjs/amino";
 import { Tendermint34Client } from "@cosmjs/tendermint-rpc";
 import { SigningAkashClient } from "./signingakashclient";
-import Query from "./query/Query";
+import Query from "./query/query";
 
 const defaultFee: StdFee = {
   amount: [

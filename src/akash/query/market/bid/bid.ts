@@ -1,8 +1,8 @@
 import { QueryClientImpl } from "../../../../codec/akash/market/v1beta1/query";
-import Get from "./get/Get";
-import List from "./list/List";
+import Get from "./get/get";
+import List from "./list/list";
 
-export default class Order {
+export default class Bid {
   public readonly get: Get;
   public readonly list: List;
 

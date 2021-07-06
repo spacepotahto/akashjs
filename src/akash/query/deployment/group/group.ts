@@ -1,5 +1,5 @@
 import { QueryClientImpl } from "../../../../codec/akash/deployment/v1beta1/query";
-import Get from "./get/Get";
+import Get from "./get/get";
 
 export default class Group {
   public readonly get: Get;

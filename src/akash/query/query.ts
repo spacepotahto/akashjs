@@ -1,10 +1,10 @@
 import { createProtobufRpcClient, QueryClient } from "@cosmjs/stargate";
 import { Tendermint34Client } from "@cosmjs/tendermint-rpc";
-import Audit from "./audit/Audit";
-import Cert from "./cert/Cert";
-import Deployment from "./deployment/Deployment";
-import Market from "./market/Market";
-import Provider from "./provider/Provider";
+import Audit from "./audit/audit";
+import Cert from "./cert/cert";
+import Deployment from "./deployment/deployment";
+import Market from "./market/market";
+import Provider from "./provider/provider";
 
 export default class Query {
   public readonly audit: Audit;
