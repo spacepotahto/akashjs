@@ -120,3 +120,6 @@ dist
 # Misc
 scripts/
 !scripts/*.sh
+
+src/test.html
+src/test.ts

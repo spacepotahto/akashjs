@@ -19,7 +19,17 @@ import {
   
     public async params(params: QueryCertListParams = {}): Promise<QueryCertificatesResponse> {
       const request: QueryCertificatesRequest = {};
-      // TODO: support filters? Current cli doesn't support it
+      if (
+        params.owner
+        || params.serial
+        || params.state
+      ) {
+        request.filter = {
+          owner: params.owner || "",
+          serial: params.serial || "",
+          state: params.state || ""
+        }
+      }
       // TODO: support pagination
       return this.queryService.Certificates(request);
     }
