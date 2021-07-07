@@ -7,12 +7,22 @@ import {
   SigningStargateClientOptions,
   BroadcastTxResponse
 } from "@cosmjs/stargate";
+import {
+  MsgCreateCertificate,
+  MsgRevokeCertificate
+} from "../codec/akash/cert/v1beta1/cert";
 import { MsgCreateDeployment } from "../codec/akash/deployment/v1beta1/deployment";
-import { MsgCreateDeploymentEncodeObject } from "./encodeobjects";
+import {
+  MsgCreateCertificateEncodeObject,
+  MsgRevokeCertificateEncodeObject,
+  MsgCreateDeploymentEncodeObject
+} from "./encodeobjects";
 
 function akashRegistry(): Registry {
   return new Registry([
     ...defaultRegistryTypes,
+    ["/akash.cert.v1beta1.MsgCreateCertificate", MsgCreateCertificate],
+    ["/akash.cert.v1beta1.MsgRevokeCertificate", MsgRevokeCertificate],
     ["/akash.deployment.v1beta1.MsgCreateDeployment", MsgCreateDeployment]
   ]);
 }
@@ -35,6 +45,32 @@ export class SigningAkashClient extends SigningStargateClient {
     options: SigningStargateClientOptions,
   ) {
     super(tmClient, signer, options);
+  }
+
+  public async certCreateClient(
+    accountAddress: string,
+    value: MsgCreateCertificate,
+    fee: StdFee,
+    memo = ""
+  ): Promise<BroadcastTxResponse> {
+    const message: MsgCreateCertificateEncodeObject = {
+      typeUrl: "/akash.cert.v1beta1.MsgCreateCertificate",
+      value: value
+    };
+    return this.signAndBroadcast(accountAddress, [message], fee, memo);
+  }
+
+  public async certRevoke(
+    accountAddress: string,
+    value: MsgRevokeCertificate,
+    fee: StdFee,
+    memo = ""
+  ): Promise<BroadcastTxResponse> {
+    const message: MsgRevokeCertificateEncodeObject = {
+      typeUrl: "/akash.cert.v1beta1.MsgRevokeCertificate",
+      value: value
+    };
+    return this.signAndBroadcast(accountAddress, [message], fee, memo);
   }
 
   public async deploymentCreate(
