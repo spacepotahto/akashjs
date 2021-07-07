@@ -1,8 +1,7 @@
-import { Akash } from "../../../akash";
-import { StdFee } from "@cosmjs/amino";
-import { MsgRevokeCertificate } from "../../../../codec/akash/cert/v1beta1/cert";
+import { Akash } from "src/akash/akash";
+import { MsgRevokeCertificate } from "src/codec/akash/cert/v1beta1/cert";
 import { BroadcastTxResponse } from "@cosmjs/stargate";
-import { TxParams } from "../../../types";
+import { TxParams } from "src/akash/types";
 
 export interface TxCertRevokeParams extends TxParams {
   serial?: string

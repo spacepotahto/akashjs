@@ -1,4 +1,4 @@
-import { QueryClientImpl } from "../../../../codec/akash/deployment/v1beta1/query";
+import { QueryClientImpl } from "src/codec/akash/deployment/v1beta1/query";
 import Get from "./get/get";
 
 export default class Group {

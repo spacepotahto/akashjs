@@ -1,4 +1,4 @@
-import { Akash } from "../../akash";
+import { Akash } from "src/akash/akash";
 // import Create from "./create/create";
 import Revoke from "./revoke/revoke";
 

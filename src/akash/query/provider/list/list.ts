@@ -2,7 +2,7 @@ import {
   QueryClientImpl,
   QueryProvidersRequest,
   QueryProvidersResponse
-} from "../../../../codec/akash/provider/v1beta1/query";
+} from "src/codec/akash/provider/v1beta1/query";
 
 export interface QueryProviderListParams {
   countTotal?: boolean,
