@@ -21,10 +21,13 @@
   "dependencies": {
     "@cosmjs/proto-signing": "^0.25.4",
     "@cosmjs/stargate": "^0.25.4",
-    "@cosmjs/tendermint-rpc": "^0.25.4"
+    "@cosmjs/tendermint-rpc": "^0.25.4",
+    "idb-keyval": "^5.0.6",
+    "pkijs": "^2.1.95"
   },
   "devDependencies": {
     "@types/jest": "^26.0.23",
+    "@types/pkijs": "0.0.8",
     "jest": "^27.0.4",
     "ts-jest": "^27.0.3",
     "ts-proto": "^1.81.1",

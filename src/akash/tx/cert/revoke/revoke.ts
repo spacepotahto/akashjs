@@ -1,7 +1,11 @@
-import { Akash } from "src/akash/akash";
-import { MsgRevokeCertificate } from "src/codec/akash/cert/v1beta1/cert";
+import { Akash } from "../../../../akash/akash";
+import { MsgRevokeCertificate } from "../../../../codec/akash/cert/v1beta1/cert";
 import { BroadcastTxResponse } from "@cosmjs/stargate";
-import { TxParams } from "src/akash/types";
+import { TxParams } from "../../../../akash/types";
+import {
+  loadPEMBlocks,
+  deletePEMBlocks
+} from "../../../../utils/certificate";
 
 export interface TxCertRevokeParams extends TxParams {
   serial?: string
@@ -15,11 +19,16 @@ export default class Revoke {
   }
 
   private async getSerial(owner: string): Promise<string> {
-    const certs = await this.akash.query.cert.list.params({ owner: owner, state: "valid" });
-    if (certs.certificates.length === 0) {
-      return "";
+    // const certs = await this.akash.query.cert.list.params({ owner: owner, state: "valid" });
+    // if (certs.certificates.length === 0) {
+    //   return "";
+    // }
+    // return certs.certificates[0].serial;
+    const cert = await loadPEMBlocks(owner);
+    if (cert) {
+      return cert.serialNumber.toString();
     }
-    return certs.certificates[0].serial;
+    return "";
   }
 
   public async params(params: TxCertRevokeParams = {}): Promise<BroadcastTxResponse> {
@@ -38,6 +47,11 @@ export default class Revoke {
       }
     };
 
-    return this.akash.signingClient.certRevoke(owner, request, fee, memo);
+    const response = this.akash.signingClient.certRevoke(owner, request, fee, memo);
+    response.then(() => {
+      // Delete locally stored certificate if exists
+      return deletePEMBlocks(owner, Number(serial));
+    });
+    return response;
   }
 }
