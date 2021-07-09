@@ -3,7 +3,7 @@ import {
   QueryClientImpl,
   QueryDeploymentsRequest,
   QueryDeploymentsResponse
-} from "src/codec/akash/deployment/v1beta1/query";
+} from "../../../../codec/akash/deployment/v1beta1/query";
 
 export interface QueryDeploymentListParams {
   countTotal?: boolean,

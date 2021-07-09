@@ -3,7 +3,7 @@ import {
   QueryClientImpl,
   QueryGroupRequest,
   QueryGroupResponse
-} from "src/codec/akash/deployment/v1beta1/query";
+} from "../../../../../codec/akash/deployment/v1beta1/query";
 
 export interface QueryDeploymentGroupGetParams {
   owner: string,

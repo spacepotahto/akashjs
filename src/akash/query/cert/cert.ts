@@ -1,5 +1,5 @@
 import { ProtobufRpcClient } from "@cosmjs/stargate";
-import { QueryClientImpl } from "src/codec/akash/cert/v1beta1/query";
+import { QueryClientImpl } from "../../../codec/akash/cert/v1beta1/query";
 import List from "./list/list";
 
 export default class Cert {

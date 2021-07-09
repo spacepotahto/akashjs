@@ -1,5 +1,5 @@
 import { ProtobufRpcClient } from "@cosmjs/stargate";
-import { QueryClientImpl } from "src/codec/akash/market/v1beta1/query";
+import { QueryClientImpl } from "../../../codec/akash/market/v1beta1/query";
 import Bid from "./bid/bid";
 import Lease from "./lease/lease";
 import Order from "./order/order";

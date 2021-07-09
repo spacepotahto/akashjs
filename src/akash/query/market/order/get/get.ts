@@ -3,7 +3,7 @@ import {
   QueryClientImpl,
   QueryOrderRequest,
   QueryOrderResponse
-} from "src/codec/akash/market/v1beta1/query";
+} from "../../../../../codec/akash/market/v1beta1/query";
 
 export interface QueryMarketLeaseGetParams {
   owner: string,

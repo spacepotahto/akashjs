@@ -1,4 +1,4 @@
-import { QueryClientImpl } from "src/codec/akash/market/v1beta1/query";
+import { QueryClientImpl } from "../../../../codec/akash/market/v1beta1/query";
 import Get from "./get/get";
 import List from "./list/list";
 

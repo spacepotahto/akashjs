@@ -10,8 +10,8 @@ import {
 import {
   MsgCreateCertificate,
   MsgRevokeCertificate
-} from "src/codec/akash/cert/v1beta1/cert";
-import { MsgCreateDeployment } from "src/codec/akash/deployment/v1beta1/deployment";
+} from "../codec/akash/cert/v1beta1/cert";
+import { MsgCreateDeployment } from "../codec/akash/deployment/v1beta1/deployment";
 import {
   MsgCreateCertificateEncodeObject,
   MsgRevokeCertificateEncodeObject,

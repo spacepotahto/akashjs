@@ -2,7 +2,7 @@ import {
   QueryClientImpl,
   QueryAllProvidersAttributesRequest,
   QueryProvidersResponse
-} from "src/codec/akash/audit/v1beta1/query";
+} from "../../../../codec/akash/audit/v1beta1/query";
 
 export interface QueryAuditListParams {
   countTotal?: boolean,
