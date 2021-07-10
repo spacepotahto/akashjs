@@ -3,23 +3,23 @@ import {
   QueryClientImpl,
   QueryOrderRequest,
   QueryOrderResponse
-} from "../../../../../codec/akash/market/v1beta1/query";
+} from "../codec/akash/market/v1beta1/query";
 
-export interface QueryMarketLeaseGetParams {
+export interface QueryMarketOrderGetParams {
   owner: string,
   dseq: number,
   gseq: number,
   oseq: number
 }
 
-export default class Get {
+export class QueryMarketOrderGet {
   private readonly queryService: QueryClientImpl;
 
   constructor (queryService: QueryClientImpl) {
     this.queryService = queryService;
   }
 
-  public async params(params: QueryMarketLeaseGetParams): Promise<QueryOrderResponse> {
+  public async params(params: QueryMarketOrderGetParams): Promise<QueryOrderResponse> {
     const request: QueryOrderRequest = {
       id: {
         owner: params.owner,

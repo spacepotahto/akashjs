@@ -3,7 +3,7 @@ import {
   QueryClientImpl,
   QueryGroupRequest,
   QueryGroupResponse
-} from "../../../../../codec/akash/deployment/v1beta1/query";
+} from "../codec/akash/deployment/v1beta1/query";
 
 export interface QueryDeploymentGroupGetParams {
   owner: string,
@@ -11,7 +11,7 @@ export interface QueryDeploymentGroupGetParams {
   gseq: number
 }
 
-export default class Get {
+export class QueryDeploymentGroupGet {
   private readonly queryService: QueryClientImpl;
 
   constructor (queryService: QueryClientImpl) {

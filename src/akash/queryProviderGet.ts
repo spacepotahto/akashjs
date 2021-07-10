@@ -2,13 +2,13 @@ import {
   QueryClientImpl,
   QueryProviderRequest,
   QueryProviderResponse
-} from "../../../../codec/akash/provider/v1beta1/query";
+} from "../codec/akash/provider/v1beta1/query";
 
 export interface QueryProviderGetParams {
   owner: string
 }
 
-export default class Get {
+export class QueryProviderGet {
   private readonly queryService: QueryClientImpl;
 
   constructor (queryService: QueryClientImpl) {

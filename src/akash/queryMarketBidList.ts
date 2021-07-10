@@ -3,9 +3,9 @@ import {
   QueryClientImpl,
   QueryBidsRequest,
   QueryBidsResponse
-} from "../../../../../codec/akash/market/v1beta1/query";
+} from "../codec/akash/market/v1beta1/query";
 
-export interface QueryBidListParams {
+export interface QueryMarketBidListParams {
   owner?: string;
   dseq?: number;
   gseq?: number;
@@ -14,14 +14,14 @@ export interface QueryBidListParams {
   state?: "open" | "matched" | "lost" | "closed";
 }
 
-export default class List {
+export class QueryMarketBidList {
   private readonly queryService: QueryClientImpl;
 
   constructor (queryService: QueryClientImpl) {
     this.queryService = queryService;
   }
 
-  public async params(params: QueryBidListParams = {}): Promise<QueryBidsResponse> {
+  public async params(params: QueryMarketBidListParams = {}): Promise<QueryBidsResponse> {
     const request: QueryBidsRequest = {};
     if (
       params.owner

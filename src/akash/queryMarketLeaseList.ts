@@ -1,32 +1,34 @@
 import Long from "long";
 import {
   QueryClientImpl,
-  QueryOrdersRequest,
-  QueryOrdersResponse
-} from "../../../../../codec/akash/market/v1beta1/query";
+  QueryLeasesRequest,
+  QueryLeasesResponse
+} from "../codec/akash/market/v1beta1/query";
 
-export interface QueryOrderListParams {
+export interface QueryLeaseListParams {
   owner?: string;
   dseq?: number;
   gseq?: number;
   oseq?: number;
-  state?: "open" | "matched" | "closed";
+  provider?: string;
+  state?: "active" | "insufficient_funds" | "closed";
 }
 
-export default class List {
+export class QueryMarketLeaseList {
   private readonly queryService: QueryClientImpl;
 
   constructor (queryService: QueryClientImpl) {
     this.queryService = queryService;
   }
 
-  public async params(params: QueryOrderListParams = {}): Promise<QueryOrdersResponse> {
-    const request: QueryOrdersRequest = {};
+  public async params(params: QueryLeaseListParams = {}): Promise<QueryLeasesResponse> {
+    const request: QueryLeasesRequest = {};
     if (
       params.owner
       || params.dseq !== undefined
       || params.gseq !== undefined
       || params.oseq !== undefined
+      || params.provider
       || params.state
     ) {
       request.filters = {
@@ -34,10 +36,11 @@ export default class List {
         dseq: params.dseq !== undefined ? new Long(params.dseq) : Long.UZERO,
         gseq: params.gseq || 0,
         oseq: params.oseq || 0,
+        provider: params.provider || "",
         state: params.state || ""
       };
     }
     // TODO: support pagination
-    return this.queryService.Orders(request);
+    return this.queryService.Leases(request);
   }
 }

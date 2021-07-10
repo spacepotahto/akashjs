@@ -1,11 +1,11 @@
 import Long from "long";
 import {
   QueryClientImpl,
-  QueryLeaseRequest,
-  QueryLeaseResponse
-} from "../../../../../codec/akash/market/v1beta1/query";
+  QueryBidRequest,
+  QueryBidResponse
+} from "../codec/akash/market/v1beta1/query";
 
-export interface QueryMarketLeaseGetParams {
+export interface QueryMarketBidGetParams {
   owner: string,
   dseq: number,
   gseq: number,
@@ -13,15 +13,15 @@ export interface QueryMarketLeaseGetParams {
   provider: string
 }
 
-export default class Get {
+export class QueryMarketBidGet {
   private readonly queryService: QueryClientImpl;
 
   constructor (queryService: QueryClientImpl) {
     this.queryService = queryService;
   }
 
-  public async params(params: QueryMarketLeaseGetParams): Promise<QueryLeaseResponse> {
-    const request: QueryLeaseRequest = {
+  public async params(params: QueryMarketBidGetParams): Promise<QueryBidResponse> {
+    const request: QueryBidRequest = {
       id: {
         owner: params.owner,
         dseq: new Long(params.dseq),
@@ -30,6 +30,6 @@ export default class Get {
         provider: params.provider
       }
     };
-    return this.queryService.Lease(request);
+    return this.queryService.Bid(request);
   }
 }

@@ -1,17 +1,17 @@
-import { Akash } from "../../../../akash/akash";
-import { MsgRevokeCertificate } from "../../../../codec/akash/cert/v1beta1/cert";
+import { Akash } from "../akash/akash";
+import { MsgRevokeCertificate } from "../codec/akash/cert/v1beta1/cert";
 import { BroadcastTxResponse } from "@cosmjs/stargate";
-import { TxParams } from "../../../../akash/types";
+import { TxParams } from "../akash/types";
 import {
   loadPEMBlocks,
   deletePEMBlocks
-} from "../../../../utils/certificate";
+} from "../utils/certificate";
 
 export interface TxCertRevokeParams extends TxParams {
   serial?: string
 }
 
-export default class Revoke {
+export class TxCertRevoke {
   private readonly akash: Akash;
 
   constructor(akash: Akash) {

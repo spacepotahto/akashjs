@@ -3,14 +3,14 @@ import {
   QueryClientImpl,
   QueryDeploymentRequest,
   QueryDeploymentResponse
-} from "../../../../codec/akash/deployment/v1beta1/query";
+} from "../codec/akash/deployment/v1beta1/query";
 
 export interface QueryDeploymentGetParams {
   dseq: number,
   owner: string
 }
 
-export default class Get {
+export class QueryDeploymentGet {
   private readonly queryService: QueryClientImpl;
 
   constructor (queryService: QueryClientImpl) {

@@ -3,7 +3,7 @@ import {
   QueryClientImpl,
   QueryDeploymentsRequest,
   QueryDeploymentsResponse
-} from "../../../../codec/akash/deployment/v1beta1/query";
+} from "../codec/akash/deployment/v1beta1/query";
 
 export interface QueryDeploymentListParams {
   countTotal?: boolean,
@@ -16,7 +16,7 @@ export interface QueryDeploymentListParams {
   state?: "active" | "closed"
 }
 
-export default class List {
+export class QueryDeploymentList {
   private readonly queryService: QueryClientImpl;
 
   constructor (queryService: QueryClientImpl) {

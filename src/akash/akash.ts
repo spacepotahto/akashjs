@@ -1,9 +1,32 @@
 import { OfflineSigner } from "@cosmjs/proto-signing";
 import { StdFee } from "@cosmjs/amino";
+import { createProtobufRpcClient, QueryClient } from "@cosmjs/stargate";
 import { Tendermint34Client } from "@cosmjs/tendermint-rpc";
-import { SigningAkashClient } from "./signingakashclient";
-import Query from "./query/query";
-import Tx from "./tx/tx";
+import { SigningAkashClient } from "./signingAkashClient";
+import { QueryCmd, TxCmd } from "./types";
+
+import { QueryClientImpl as AuditQueryClientImpl } from "../codec/akash/audit/v1beta1/query";
+import { QueryClientImpl as CertQueryClientImpl } from "../codec/akash/cert/v1beta1/query";
+import { QueryClientImpl as DeploymentQueryClientImpl } from "../codec/akash/deployment/v1beta1/query";
+import { QueryClientImpl as MarketQueryClientImpl } from "../codec/akash/market/v1beta1/query";
+import { QueryClientImpl as ProviderQueryClientImpl } from "../codec/akash/provider/v1beta1/query";
+import { QueryAuditGet } from "./queryAuditGet";
+import { QueryAuditList } from "./queryAuditList";
+import { QueryCertList } from "./queryCertList";
+import { QueryDeploymentGet } from "./queryDeploymentGet";
+import { QueryDeploymentList } from "./queryDeploymentList";
+import { QueryDeploymentGroupGet } from "./queryDeploymentGroupGet";
+import { QueryMarketBidGet } from "./queryMarketBidGet";
+import { QueryMarketBidList } from "./queryMarketBidList";
+import { QueryMarketLeaseGet } from "./queryMarketLeaseGet";
+import { QueryMarketLeaseList } from "./queryMarketLeaseList";
+import { QueryMarketOrderGet } from "./queryMarketOrderGet";
+import { QueryMarketOrderList } from "./queryMarketOrderList";
+import { QueryProviderGet } from "./queryProviderGet";
+import { QueryProviderList } from "./queryProviderList";
+
+import { TxCertRevoke } from "./txCertRevoke";
+import { TxCertCreateClient } from "./txCertCreateClient";
 
 export const defaultFee: StdFee = {
   amount: [
@@ -20,8 +43,8 @@ export class Akash {
   public readonly signingClient: SigningAkashClient;
   public readonly defaultFee = defaultFee;
 
-  public readonly query: Query;
-  public readonly tx: Tx;
+  public readonly query: QueryCmd;
+  public readonly tx: TxCmd;
 
   public static async connect(
     endpoint: string,
@@ -42,7 +65,57 @@ export class Akash {
     this.address = address;
     this.signingClient = signingClient;
 
-    this.query = new Query(tmClient);
-    this.tx = new Tx(this);
+    const queryClient = new QueryClient(tmClient);
+    const rpcClient = createProtobufRpcClient(queryClient);
+
+    const auditQueryClientImpl = new AuditQueryClientImpl(rpcClient);
+    const certQueryClientImpl = new CertQueryClientImpl(rpcClient);
+    const deploymentQueryClientImpl = new DeploymentQueryClientImpl(rpcClient);
+    const marketQueryClientImpl = new MarketQueryClientImpl(rpcClient);
+    const providerQueryClientImpl = new ProviderQueryClientImpl(rpcClient);
+
+    this.query = {
+      audit: {
+        get: new QueryAuditGet(auditQueryClientImpl),
+        list: new QueryAuditList(auditQueryClientImpl)
+      },
+      cert: {
+        list: new QueryCertList(certQueryClientImpl)
+      },
+      deployment: {
+        get: new QueryDeploymentGet(deploymentQueryClientImpl),
+        group: {
+          get: new QueryDeploymentGroupGet(deploymentQueryClientImpl)
+        },
+        list: new QueryDeploymentList(deploymentQueryClientImpl)
+      },
+      market: {
+        bid: {
+          get: new QueryMarketBidGet(marketQueryClientImpl),
+          list: new QueryMarketBidList(marketQueryClientImpl)
+        },
+        lease: {
+          get: new QueryMarketLeaseGet(marketQueryClientImpl),
+          list: new QueryMarketLeaseList(marketQueryClientImpl)
+        },
+        order: {
+          get: new QueryMarketOrderGet(marketQueryClientImpl),
+          list: new QueryMarketOrderList(marketQueryClientImpl)
+        }
+      },
+      provider: {
+        get: new QueryProviderGet(providerQueryClientImpl),
+        list: new QueryProviderList(providerQueryClientImpl)
+      }
+    };
+
+    this.tx = {
+      cert: {
+        create: {
+          client: new TxCertCreateClient(this)
+        },
+        revoke: new TxCertRevoke(this)
+      }
+    }
   }
 }
