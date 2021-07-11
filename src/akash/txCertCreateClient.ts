@@ -1,4 +1,4 @@
-import { Akash } from "../akash/akash";
+import { Akash, defaultFee } from "../akash/akash";
 import { MsgCreateCertificate } from "../codec/akash/cert/v1beta1/cert";
 import { BroadcastTxResponse } from "@cosmjs/stargate";
 import { TxParams } from "../akash/types";
@@ -26,7 +26,7 @@ export class TxCertCreateClient {
 
     const {
       memo = "",
-      fee = this.akash.defaultFee,
+      fee = defaultFee,
       naf = 365,
       nbf = new Date()
     } = params;

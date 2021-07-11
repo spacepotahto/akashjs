@@ -21,7 +21,8 @@ export class QueryProviderList {
 
   public async params(params: QueryProviderListParams = {}): Promise<QueryProvidersResponse> {
     const request: QueryProvidersRequest = {};
-    // TODO: support pagination
+    // TODO: support pagination, see createPagination()
+    // in https://github.com/cosmos/cosmjs/blob/main/packages/stargate/src/queries/utils.ts
     return this.queryService.Providers(request);
   }
 }

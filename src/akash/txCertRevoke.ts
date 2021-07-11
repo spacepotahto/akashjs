@@ -1,4 +1,4 @@
-import { Akash } from "../akash/akash";
+import { Akash, defaultFee } from "../akash/akash";
 import { MsgRevokeCertificate } from "../codec/akash/cert/v1beta1/cert";
 import { BroadcastTxResponse } from "@cosmjs/stargate";
 import { TxParams } from "../akash/types";
@@ -19,11 +19,6 @@ export class TxCertRevoke {
   }
 
   private async getSerial(owner: string): Promise<string> {
-    // const certs = await this.akash.query.cert.list.params({ owner: owner, state: "valid" });
-    // if (certs.certificates.length === 0) {
-    //   return "";
-    // }
-    // return certs.certificates[0].serial;
     const cert = await loadPEMBlocks(owner);
     if (cert) {
       return cert.serialNumber.toString();
@@ -36,7 +31,7 @@ export class TxCertRevoke {
 
     const {
       memo = "",
-      fee = this.akash.defaultFee,
+      fee = defaultFee,
       serial = await this.getSerial(owner)
     } = params;
 

@@ -27,11 +27,16 @@ import { QueryProviderList } from "./queryProviderList";
 
 import { TxCertRevoke } from "./txCertRevoke";
 import { TxCertCreateClient } from "./txCertCreateClient";
+import { TxDeploymentClose } from "./txDeploymentClose";
+import { TxDeploymentDeposit } from "./txDeploymentDeposit";
+import { TxDeploymentCreate } from "./txDeploymentCreate";
+
+export const denom = "uakt";
 
 export const defaultFee: StdFee = {
   amount: [
     {
-      denom: "uakt",
+      denom: denom,
       amount: "5000",
     }
   ],
@@ -40,8 +45,8 @@ export const defaultFee: StdFee = {
 
 export class Akash {
   public readonly address: string;
+  public readonly tmClient: Tendermint34Client
   public readonly signingClient: SigningAkashClient;
-  public readonly defaultFee = defaultFee;
 
   public readonly query: QueryCmd;
   public readonly tx: TxCmd;
@@ -63,6 +68,7 @@ export class Akash {
     address: string
   ) {
     this.address = address;
+    this.tmClient = tmClient;
     this.signingClient = signingClient;
 
     const queryClient = new QueryClient(tmClient);
@@ -74,6 +80,8 @@ export class Akash {
     const marketQueryClientImpl = new MarketQueryClientImpl(rpcClient);
     const providerQueryClientImpl = new ProviderQueryClientImpl(rpcClient);
 
+    // TODO: Use QueryClient.withExtensions instead, see bottom of
+    // https://github.com/cosmos/cosmjs/blob/main/packages/stargate/CUSTOM_PROTOBUF_CODECS.md
     this.query = {
       audit: {
         get: new QueryAuditGet(auditQueryClientImpl),
@@ -115,6 +123,17 @@ export class Akash {
           client: new TxCertCreateClient(this)
         },
         revoke: new TxCertRevoke(this)
+      },
+      deployment: {
+        close: new TxDeploymentClose(this),
+        create: new TxDeploymentCreate(this),
+        deposit: new TxDeploymentDeposit(this),
+        // group: {
+        //   close: {},
+        //   pause: {},
+        //   start: {}
+        // },
+        update: {}
       }
     }
   }

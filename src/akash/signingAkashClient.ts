@@ -11,11 +11,17 @@ import {
   MsgCreateCertificate,
   MsgRevokeCertificate
 } from "../codec/akash/cert/v1beta1/cert";
-import { MsgCreateDeployment } from "../codec/akash/deployment/v1beta1/deployment";
+import {
+  MsgCloseDeployment,
+  MsgCreateDeployment,
+  MsgDepositDeployment
+} from "../codec/akash/deployment/v1beta1/deployment";
 import {
   MsgCreateCertificateEncodeObject,
   MsgRevokeCertificateEncodeObject,
-  MsgCreateDeploymentEncodeObject
+  MsgCreateDeploymentEncodeObject,
+  MsgCloseDeploymentEncodeObject,
+  MsgDepositDeploymentEncodeObject
 } from "./encodeobjects";
 
 
@@ -25,7 +31,9 @@ function akashRegistry(): Registry {
     ...defaultRegistryTypes,
     ["/akash.cert.v1beta1.MsgCreateCertificate", MsgCreateCertificate],
     ["/akash.cert.v1beta1.MsgRevokeCertificate", MsgRevokeCertificate],
-    ["/akash.deployment.v1beta1.MsgCreateDeployment", MsgCreateDeployment]
+    ["/akash.deployment.v1beta1.MsgCreateDeployment", MsgCreateDeployment],
+    ["/akash.deployment.v1beta1.MsgCloseDeployment", MsgCloseDeployment],
+    ["/akash.deployment.v1beta1.MsgDepositDeployment", MsgDepositDeployment]
   ]);
 }
 
@@ -83,6 +91,32 @@ export class SigningAkashClient extends SigningStargateClient {
   ): Promise<BroadcastTxResponse> {
     const message: MsgCreateDeploymentEncodeObject = {
       typeUrl: "/akash.deployment.v1beta1.MsgCreateDeployment",
+      value: value
+    };
+    return this.signAndBroadcast(accountAddress, [message], fee, memo);
+  }
+
+  public async deploymentClose(
+    accountAddress: string,
+    value: MsgCloseDeployment,
+    fee: StdFee,
+    memo = ""
+  ): Promise<BroadcastTxResponse> {
+    const message: MsgCloseDeploymentEncodeObject = {
+      typeUrl: "/akash.deployment.v1beta1.MsgCloseDeployment",
+      value: value
+    };
+    return this.signAndBroadcast(accountAddress, [message], fee, memo);
+  }
+
+  public async deploymentDeposit(
+    accountAddress: string,
+    value: MsgDepositDeployment,
+    fee: StdFee,
+    memo = ""
+  ): Promise<BroadcastTxResponse> {
+    const message: MsgDepositDeploymentEncodeObject = {
+      typeUrl: "/akash.deployment.v1beta1.MsgDepositDeployment",
       value: value
     };
     return this.signAndBroadcast(accountAddress, [message], fee, memo);

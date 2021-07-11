@@ -5,7 +5,7 @@
     "declaration": true,
     "esModuleInterop": true,
     "lib": [
-      "es2017",
+      "es2019",
       "dom"
     ],
     "module": "commonjs",

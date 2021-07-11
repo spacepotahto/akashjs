@@ -23,10 +23,12 @@
     "@cosmjs/stargate": "^0.25.4",
     "@cosmjs/tendermint-rpc": "^0.25.4",
     "idb-keyval": "^5.0.6",
+    "js-yaml": "^4.1.0",
     "pkijs": "^2.1.95"
   },
   "devDependencies": {
     "@types/jest": "^26.0.23",
+    "@types/js-yaml": "^4.0.2",
     "@types/pkijs": "0.0.8",
     "jest": "^27.0.4",
     "ts-jest": "^27.0.3",

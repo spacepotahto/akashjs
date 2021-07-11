@@ -32,7 +32,8 @@ export class QueryDeploymentList {
         state: params.state || ""
       };
     }
-    // TODO: support pagination
+    // TODO: support pagination, see createPagination()
+    // in https://github.com/cosmos/cosmjs/blob/main/packages/stargate/src/queries/utils.ts
     return this.queryService.Deployments(request);
   }
 }

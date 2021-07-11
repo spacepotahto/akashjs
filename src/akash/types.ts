@@ -15,6 +15,9 @@ import { QueryProviderGet } from "./queryProviderGet";
 import { QueryProviderList } from "./queryProviderList";
 import { TxCertCreateClient } from "./txCertCreateClient";
 import { TxCertRevoke } from "./txCertRevoke";
+import { TxDeploymentClose } from "./txDeploymentClose";
+import { TxDeploymentCreate } from "./txDeploymentCreate";
+import { TxDeploymentDeposit } from "./txDeploymentDeposit";
 
 export interface TxParams {
   memo?: string,
@@ -62,5 +65,16 @@ export interface TxCmd {
       client: TxCertCreateClient
     },
     revoke: TxCertRevoke
+  },
+  deployment: {
+    close: TxDeploymentClose,
+    create: TxDeploymentCreate,
+    deposit: TxDeploymentDeposit,
+    // group: {
+    //   close: {},
+    //   pause: {},
+    //   start: {}
+    // },
+    update: {}
   }
 }
