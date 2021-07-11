@@ -18,6 +18,10 @@ import { TxCertRevoke } from "./txCertRevoke";
 import { TxDeploymentClose } from "./txDeploymentClose";
 import { TxDeploymentCreate } from "./txDeploymentCreate";
 import { TxDeploymentDeposit } from "./txDeploymentDeposit";
+import { TxDeploymentGroupClose } from "./txDeploymentGroupClose";
+import { TxDeploymentGroupPause } from "./txDeploymentGroupPause";
+import { TxDeploymentGroupStart } from "./txDeploymentGroupStart";
+import { TxDeploymentUpdate } from "./txDeploymentUpdate";
 
 export interface TxParams {
   memo?: string,
@@ -70,11 +74,11 @@ export interface TxCmd {
     close: TxDeploymentClose,
     create: TxDeploymentCreate,
     deposit: TxDeploymentDeposit,
-    // group: {
-    //   close: {},
-    //   pause: {},
-    //   start: {}
-    // },
-    update: {}
+    group: {
+      close: TxDeploymentGroupClose,
+      pause: TxDeploymentGroupPause
+      start: TxDeploymentGroupStart
+    },
+    update: TxDeploymentUpdate
   }
 }

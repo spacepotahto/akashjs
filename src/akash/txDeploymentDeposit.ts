@@ -1,5 +1,5 @@
 import Long from "long";
-import { Akash, defaultFee, denom } from "../akash/akash";
+import { Akash, defaultFee } from "../akash/akash";
 import { MsgDepositDeployment } from "../codec/akash/deployment/v1beta1/deployment";
 import { BroadcastTxResponse } from "@cosmjs/stargate";
 import { TxParams } from "../akash/types";

@@ -1,12 +1,18 @@
 import { EncodeObject } from "@cosmjs/proto-signing";
 import {
+  MsgCloseGroup,
+  MsgPauseGroup,
+  MsgStartGroup
+} from "../codec/akash/deployment/v1beta1/group";
+import {
   MsgCreateCertificate,
   MsgRevokeCertificate
 } from "../codec/akash/cert/v1beta1/cert";
 import {
   MsgCreateDeployment,
   MsgCloseDeployment,
-  MsgDepositDeployment
+  MsgDepositDeployment,
+  MsgUpdateDeployment
 } from "../codec/akash/deployment/v1beta1/deployment";
 
 export interface MsgCreateCertificateEncodeObject extends EncodeObject {
@@ -32,4 +38,24 @@ export interface MsgCloseDeploymentEncodeObject extends EncodeObject {
 export interface MsgDepositDeploymentEncodeObject extends EncodeObject {
   readonly typeUrl: "/akash.deployment.v1beta1.MsgDepositDeployment",
   readonly value: MsgDepositDeployment;
+}
+
+export interface MsgUpdateDeploymentEncodeObject extends EncodeObject {
+  readonly typeUrl: "/akash.deployment.v1beta1.MsgUpdateDeployment",
+  readonly value: MsgUpdateDeployment;
+}
+
+export interface MsgCloseGroupEncodeObject extends EncodeObject {
+  readonly typeUrl: "/akash.deployment.v1beta1.MsgCloseGroup",
+  readonly value: MsgCloseGroup;
+}
+
+export interface MsgPauseGroupEncodeObject extends EncodeObject {
+  readonly typeUrl: "/akash.deployment.v1beta1.MsgPauseGroup",
+  readonly value: MsgPauseGroup;
+}
+
+export interface MsgStartGroupEncodeObject extends EncodeObject {
+  readonly typeUrl: "/akash.deployment.v1beta1.MsgStartGroup",
+  readonly value: MsgStartGroup;
 }

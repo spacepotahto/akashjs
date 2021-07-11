@@ -14,17 +14,25 @@ import {
 import {
   MsgCloseDeployment,
   MsgCreateDeployment,
-  MsgDepositDeployment
+  MsgDepositDeployment,
+  MsgUpdateDeployment
 } from "../codec/akash/deployment/v1beta1/deployment";
 import {
   MsgCreateCertificateEncodeObject,
   MsgRevokeCertificateEncodeObject,
   MsgCreateDeploymentEncodeObject,
   MsgCloseDeploymentEncodeObject,
-  MsgDepositDeploymentEncodeObject
+  MsgDepositDeploymentEncodeObject,
+  MsgUpdateDeploymentEncodeObject,
+  MsgCloseGroupEncodeObject,
+  MsgPauseGroupEncodeObject,
+  MsgStartGroupEncodeObject
 } from "./encodeobjects";
-
-
+import {
+  MsgCloseGroup,
+  MsgPauseGroup,
+  MsgStartGroup
+} from "../codec/akash/deployment/v1beta1/group";
 
 function akashRegistry(): Registry {
   return new Registry([
@@ -33,7 +41,11 @@ function akashRegistry(): Registry {
     ["/akash.cert.v1beta1.MsgRevokeCertificate", MsgRevokeCertificate],
     ["/akash.deployment.v1beta1.MsgCreateDeployment", MsgCreateDeployment],
     ["/akash.deployment.v1beta1.MsgCloseDeployment", MsgCloseDeployment],
-    ["/akash.deployment.v1beta1.MsgDepositDeployment", MsgDepositDeployment]
+    ["/akash.deployment.v1beta1.MsgDepositDeployment", MsgDepositDeployment],
+    ["/akash.deployment.v1beta1.MsgUpdateDeployment", MsgUpdateDeployment],
+    ["/akash.deployment.v1beta1.MsgCloseGroup", MsgCloseGroup],
+    ["/akash.deployment.v1beta1.MsgPauseGroup", MsgPauseGroup],
+    ["/akash.deployment.v1beta1.MsgPauseGroup", MsgStartGroup],
   ]);
 }
 
@@ -122,5 +134,55 @@ export class SigningAkashClient extends SigningStargateClient {
     return this.signAndBroadcast(accountAddress, [message], fee, memo);
   }
 
-}
+  public async deploymentUpdate(
+    accountAddress: string,
+    value: MsgUpdateDeployment,
+    fee: StdFee,
+    memo = ""
+  ): Promise<BroadcastTxResponse> {
+    const message: MsgUpdateDeploymentEncodeObject = {
+      typeUrl: "/akash.deployment.v1beta1.MsgUpdateDeployment",
+      value: value
+    };
+    return this.signAndBroadcast(accountAddress, [message], fee, memo);
+  }
 
+  public async deploymentGroupClose(
+    accountAddress: string,
+    value: MsgCloseGroup,
+    fee: StdFee,
+    memo = ""
+  ): Promise<BroadcastTxResponse> {
+    const message: MsgCloseGroupEncodeObject = {
+      typeUrl: "/akash.deployment.v1beta1.MsgCloseGroup",
+      value: value
+    };
+    return this.signAndBroadcast(accountAddress, [message], fee, memo);
+  }
+
+  public async deploymentGroupPause(
+    accountAddress: string,
+    value: MsgPauseGroup,
+    fee: StdFee,
+    memo = ""
+  ): Promise<BroadcastTxResponse> {
+    const message: MsgPauseGroupEncodeObject = {
+      typeUrl: "/akash.deployment.v1beta1.MsgPauseGroup",
+      value: value
+    };
+    return this.signAndBroadcast(accountAddress, [message], fee, memo);
+  }
+
+  public async deploymentGroupStart(
+    accountAddress: string,
+    value: MsgStartGroup,
+    fee: StdFee,
+    memo = ""
+  ): Promise<BroadcastTxResponse> {
+    const message: MsgStartGroupEncodeObject = {
+      typeUrl: "/akash.deployment.v1beta1.MsgStartGroup",
+      value: value
+    };
+    return this.signAndBroadcast(accountAddress, [message], fee, memo);
+  }
+}

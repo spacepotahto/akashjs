@@ -30,6 +30,10 @@ import { TxCertCreateClient } from "./txCertCreateClient";
 import { TxDeploymentClose } from "./txDeploymentClose";
 import { TxDeploymentDeposit } from "./txDeploymentDeposit";
 import { TxDeploymentCreate } from "./txDeploymentCreate";
+import { TxDeploymentUpdate } from "./txDeploymentUpdate";
+import { TxDeploymentGroupClose } from "./txDeploymentGroupClose";
+import { TxDeploymentGroupPause } from "./txDeploymentGroupPause";
+import { TxDeploymentGroupStart } from "./txDeploymentGroupStart";
 
 export const denom = "uakt";
 
@@ -128,12 +132,12 @@ export class Akash {
         close: new TxDeploymentClose(this),
         create: new TxDeploymentCreate(this),
         deposit: new TxDeploymentDeposit(this),
-        // group: {
-        //   close: {},
-        //   pause: {},
-        //   start: {}
-        // },
-        update: {}
+        group: {
+          close: new TxDeploymentGroupClose(this),
+          pause: new TxDeploymentGroupPause(this),
+          start: new TxDeploymentGroupStart(this)
+        },
+        update: new TxDeploymentUpdate(this)
       }
     }
   }

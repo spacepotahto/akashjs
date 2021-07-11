@@ -145,8 +145,8 @@ export class SDL {
         }
       });
     });
-    // golang version appear to process services in ascending sort order.
-    // Do the same to achieve the same manifest version hash.
+    // golang version yaml unmarshalling result in sorted keys it seems.
+    // Do the same by processing services in sorted order to achieve the same manifest version hash.
     Object.entries(groupServices).forEach(([groupName, serviceNames]) => {
       groupServices[groupName] = serviceNames.sort();
     });
@@ -259,12 +259,13 @@ export class SDL {
             }
           })
 
+          const service = this.data.services[serviceName];
           return {
             Name: serviceName,
-            Image: this.data.services[serviceName].image,
-            Command: this.data.services[serviceName].command || null,
-            Args: this.data.services[serviceName].args || null,
-            Env: this.data.services[serviceName].env || null,
+            Image: service.image,
+            Command: service.command || null,
+            Args: service.args || null,
+            Env: service.env || null,
             Resources: {
               cpu: {
                 units: {
