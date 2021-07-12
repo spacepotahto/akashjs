@@ -14,6 +14,7 @@ import {
   MsgDepositDeployment,
   MsgUpdateDeployment
 } from "../codec/akash/deployment/v1beta1/deployment";
+import { MsgCreateLease } from "../codec/akash/market/v1beta1/lease";
 
 export interface MsgCreateCertificateEncodeObject extends EncodeObject {
   readonly typeUrl: "/akash.cert.v1beta1.MsgCreateCertificate";
@@ -58,4 +59,9 @@ export interface MsgPauseGroupEncodeObject extends EncodeObject {
 export interface MsgStartGroupEncodeObject extends EncodeObject {
   readonly typeUrl: "/akash.deployment.v1beta1.MsgStartGroup",
   readonly value: MsgStartGroup;
+}
+
+export interface MsgCreateLeaseEncodeObject extends EncodeObject {
+  readonly typeUrl: "/akash.market.v1beta1.MsgCreateLease",
+  readonly value: MsgCreateLease;
 }

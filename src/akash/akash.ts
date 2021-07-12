@@ -34,6 +34,7 @@ import { TxDeploymentUpdate } from "./txDeploymentUpdate";
 import { TxDeploymentGroupClose } from "./txDeploymentGroupClose";
 import { TxDeploymentGroupPause } from "./txDeploymentGroupPause";
 import { TxDeploymentGroupStart } from "./txDeploymentGroupStart";
+import { TxMarketLeaseCreate } from "./txMarketLeaseCreate";
 
 export const denom = "uakt";
 
@@ -138,6 +139,11 @@ export class Akash {
           start: new TxDeploymentGroupStart(this)
         },
         update: new TxDeploymentUpdate(this)
+      },
+      market: {
+        lease: {
+          create: new TxMarketLeaseCreate(this)
+        }
       }
     }
   }

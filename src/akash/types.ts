@@ -22,6 +22,7 @@ import { TxDeploymentGroupClose } from "./txDeploymentGroupClose";
 import { TxDeploymentGroupPause } from "./txDeploymentGroupPause";
 import { TxDeploymentGroupStart } from "./txDeploymentGroupStart";
 import { TxDeploymentUpdate } from "./txDeploymentUpdate";
+import { TxMarketLeaseCreate } from "./txMarketLeaseCreate";
 
 export interface TxParams {
   memo?: string,
@@ -80,5 +81,10 @@ export interface TxCmd {
       start: TxDeploymentGroupStart
     },
     update: TxDeploymentUpdate
+  },
+  market: {
+    lease: {
+      create: TxMarketLeaseCreate
+    }
   }
 }

@@ -1,2 +1,2 @@
 export { Akash } from "./akash/akash";
-export { SDL } from "./utils/deployment";
+export { SDL, findDeploymentSequence } from "./utils/deployment";

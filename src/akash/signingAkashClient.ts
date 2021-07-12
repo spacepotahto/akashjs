@@ -26,13 +26,15 @@ import {
   MsgUpdateDeploymentEncodeObject,
   MsgCloseGroupEncodeObject,
   MsgPauseGroupEncodeObject,
-  MsgStartGroupEncodeObject
+  MsgStartGroupEncodeObject,
+  MsgCreateLeaseEncodeObject
 } from "./encodeobjects";
 import {
   MsgCloseGroup,
   MsgPauseGroup,
   MsgStartGroup
 } from "../codec/akash/deployment/v1beta1/group";
+import { MsgCreateLease } from "../codec/akash/market/v1beta1/lease";
 
 function akashRegistry(): Registry {
   return new Registry([
@@ -46,6 +48,7 @@ function akashRegistry(): Registry {
     ["/akash.deployment.v1beta1.MsgCloseGroup", MsgCloseGroup],
     ["/akash.deployment.v1beta1.MsgPauseGroup", MsgPauseGroup],
     ["/akash.deployment.v1beta1.MsgPauseGroup", MsgStartGroup],
+    ["/akash.market.v1beta1.MsgCreateLease", MsgCreateLease],
   ]);
 }
 
@@ -181,6 +184,19 @@ export class SigningAkashClient extends SigningStargateClient {
   ): Promise<BroadcastTxResponse> {
     const message: MsgStartGroupEncodeObject = {
       typeUrl: "/akash.deployment.v1beta1.MsgStartGroup",
+      value: value
+    };
+    return this.signAndBroadcast(accountAddress, [message], fee, memo);
+  }
+
+  public async marketLeaseCreate(
+    accountAddress: string,
+    value: MsgCreateLease,
+    fee: StdFee,
+    memo = ""
+  ): Promise<BroadcastTxResponse> {
+    const message: MsgCreateLeaseEncodeObject = {
+      typeUrl: "/akash.market.v1beta1.MsgCreateLease",
       value: value
     };
     return this.signAndBroadcast(accountAddress, [message], fee, memo);
