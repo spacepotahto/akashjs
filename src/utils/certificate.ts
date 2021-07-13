@@ -115,7 +115,7 @@ export async function createPEMBlocks(
   //region Extended Key Usage
   const extKeyUsage = new ExtKeyUsage({
     keyPurposes: [
-      "1.3.6.1.5.5.7.3.1", // id-kp-serverAuth
+      "1.3.6.1.5.5.7.3.2", // id-kp-clientAuth
     ],
   });
 
@@ -159,8 +159,12 @@ export async function savePEMBlocks(pemBlocks: PEMBlocks): Promise<void> {
   return set(pemBlocks.owner, pemBlocks);
 }
 
-export async function loadPEMBlocks(owner: string): Promise<PEMBlocks | undefined> {
-  return get(owner);
+export async function loadPEMBlocks(owner: string): Promise<PEMBlocks> {
+  const pemBlocks = await get(owner);
+  if (!pemBlocks) {
+    throw new Error('No Certificates found.');
+  }
+  return pemBlocks;
 }
 
 export async function deletePEMBlocks(owner: string, serial: number): Promise<void> {
@@ -185,6 +189,15 @@ export function encode(pemBlocks: PEMBlocks) {
     publicKey: `-----BEGIN EC PUBLIC KEY-----\n${formatPEM(
       toBase64(arrayBufferToString(pemBlocks.publicKey))
     )}\n-----END EC PUBLIC KEY-----`
+  }
+}
+
+export async function getPemStrings(owner: string) {
+  const pemBlocks = await loadPEMBlocks(owner);
+  const pemStrings = encode(pemBlocks);
+  return {
+    cert: pemStrings.certificate,
+    key: pemStrings.privateKey
   }
 }
 

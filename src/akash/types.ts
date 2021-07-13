@@ -1,4 +1,6 @@
 import { StdFee } from "@cosmjs/stargate";
+import { ProviderLeaseStatus } from "./providerLeaseStatus";
+import { ProviderSendManifest } from "./providerSendManifest";
 import { QueryAuditGet } from "./queryAuditGet";
 import { QueryAuditList } from "./queryAuditList";
 import { QueryCertList } from "./queryCertList";
@@ -87,4 +89,9 @@ export interface TxCmd {
       create: TxMarketLeaseCreate
     }
   }
+}
+
+export interface ProviderCmd {
+  sendManifest: ProviderSendManifest,
+  leaseStatus: ProviderLeaseStatus
 }

@@ -5,7 +5,7 @@ import {
 } from "../codec/akash/provider/v1beta1/query";
 
 export interface QueryProviderGetParams {
-  owner: string
+  provider: string
 }
 
 export class QueryProviderGet {
@@ -17,7 +17,7 @@ export class QueryProviderGet {
 
   public async params(params: QueryProviderGetParams): Promise<QueryProviderResponse> {
     const request: QueryProviderRequest = {
-      owner: params.owner
+      owner: params.provider
     };
     return this.queryService.Provider(request);
   }

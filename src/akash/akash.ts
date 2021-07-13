@@ -3,7 +3,7 @@ import { StdFee } from "@cosmjs/amino";
 import { createProtobufRpcClient, QueryClient } from "@cosmjs/stargate";
 import { Tendermint34Client } from "@cosmjs/tendermint-rpc";
 import { SigningAkashClient } from "./signingAkashClient";
-import { QueryCmd, TxCmd } from "./types";
+import { ProviderCmd, QueryCmd, TxCmd } from "./types";
 
 import { QueryClientImpl as AuditQueryClientImpl } from "../codec/akash/audit/v1beta1/query";
 import { QueryClientImpl as CertQueryClientImpl } from "../codec/akash/cert/v1beta1/query";
@@ -36,6 +36,9 @@ import { TxDeploymentGroupPause } from "./txDeploymentGroupPause";
 import { TxDeploymentGroupStart } from "./txDeploymentGroupStart";
 import { TxMarketLeaseCreate } from "./txMarketLeaseCreate";
 
+import { ProviderSendManifest } from "./providerSendManifest";
+import { ProviderLeaseStatus } from "./providerLeaseStatus";
+
 export const denom = "uakt";
 
 export const defaultFee: StdFee = {
@@ -55,6 +58,7 @@ export class Akash {
 
   public readonly query: QueryCmd;
   public readonly tx: TxCmd;
+  public readonly provider: ProviderCmd;
 
   public static async connect(
     endpoint: string,
@@ -145,6 +149,11 @@ export class Akash {
           create: new TxMarketLeaseCreate(this)
         }
       }
-    }
+    };
+
+    this.provider = {
+      sendManifest: new ProviderSendManifest(this),
+      leaseStatus: new ProviderLeaseStatus(this)
+    };
   }
 }
