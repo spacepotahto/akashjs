@@ -1,9 +1,17 @@
 import { OfflineSigner } from "@cosmjs/proto-signing";
 import { StdFee } from "@cosmjs/amino";
-import { createProtobufRpcClient, QueryClient } from "@cosmjs/stargate";
+import {
+  createProtobufRpcClient,
+  QueryClient,
+  setupBankExtension
+} from "@cosmjs/stargate";
 import { Tendermint34Client } from "@cosmjs/tendermint-rpc";
 import { SigningAkashClient } from "./signingAkashClient";
-import { ProviderCmd, QueryCmd, TxCmd } from "./types";
+import {
+  ProviderCmd,
+  QueryCmd,
+  TxCmd
+} from "./types";
 
 import { QueryClientImpl as AuditQueryClientImpl } from "../codec/akash/audit/v1beta1/query";
 import { QueryClientImpl as CertQueryClientImpl } from "../codec/akash/cert/v1beta1/query";
@@ -89,6 +97,11 @@ export class Akash {
     const marketQueryClientImpl = new MarketQueryClientImpl(rpcClient);
     const providerQueryClientImpl = new ProviderQueryClientImpl(rpcClient);
 
+    const bankQueryClient = QueryClient.withExtensions(
+      tmClient,
+      setupBankExtension
+    );
+
     // TODO: Use QueryClient.withExtensions instead, see bottom of
     // https://github.com/cosmos/cosmjs/blob/main/packages/stargate/CUSTOM_PROTOBUF_CODECS.md
     this.query = {
@@ -96,6 +109,7 @@ export class Akash {
         get: new QueryAuditGet(auditQueryClientImpl),
         list: new QueryAuditList(auditQueryClientImpl)
       },
+      bank: bankQueryClient.bank,
       cert: {
         list: new QueryCertList(certQueryClientImpl)
       },

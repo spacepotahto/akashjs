@@ -1,4 +1,4 @@
-import { StdFee } from "@cosmjs/stargate";
+import { BankExtension, StdFee } from "@cosmjs/stargate";
 import { ProviderLeaseStatus } from "./providerLeaseStatus";
 import { ProviderSendManifest } from "./providerSendManifest";
 import { QueryAuditGet } from "./queryAuditGet";
@@ -36,6 +36,7 @@ export interface QueryCmd {
     get: QueryAuditGet,
     list: QueryAuditList
   },
+  bank: BankExtension["bank"],
   cert: {
     list: QueryCertList
   },
