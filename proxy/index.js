@@ -51,7 +51,6 @@ function getApp(rpcEndpoints) {
       case 'LEASE_LOGS':
       case 'LEASE_EVENTS':
         axios.get(uri, { httpsAgent }).then((response) => {
-          console.log(response);
           res.send(response.data);
         });
         break;
