@@ -1,5 +1,5 @@
 # AkashJS - Akash JavaScript API
-AkashJS implements much of the [Akash command-line](https://docs.akash.network/general-commands) functionality in JavaScript (with TypeScript support) to enable JavaScript based deployment clients to be built. An example of this is the [Akash Deploy Website](https://2g0cl9g6u0mn6vrbiajv5p9h508vbfq07j6fm060dl8lci85k436jh0.siasky.net/) that interacts with the [Keplr wallet](https://keplr.xyz/) browser extension to allow visitors to quickly deploy to Akash.
+AkashJS implements much of the [Akash command-line](https://docs.akash.network/general-commands) functionality in JavaScript (with TypeScript support) to enable JavaScript based deployment clients to be built. An example of this is the [Akash Deploy Website](https://github.com/spacepotahto/akash-deploy-ui) that interacts with the [Keplr wallet](https://keplr.xyz/) browser extension to allow visitors to quickly deploy to Akash.
 
 # Getting Started
 ## Installation
