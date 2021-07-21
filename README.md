@@ -31,7 +31,7 @@ The following shows some semi-pseudo code to give you an idea. It's certainly no
 
 e.g. the command-line
 ```shell
-akash tx query cert list --owner ADDRESS --serial SERIAL
+akash query cert list --owner ADDRESS --serial SERIAL
 ```
 
 in equivalent JavaScript is 
