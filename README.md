@@ -109,13 +109,13 @@ const response = await akash.provider.leaseStatus.params({
 ```
 
 ## Stargate
-An instance of [`SigningAkashClient`](src/akash/signingAkashClient.ts), which extends [`SigningStargateClient`](https://github.com/cosmos/cosmjs/blob/main/packages/stargate/src/signingstargateclient.ts), is accessible from the instance of `Akash`. This means the methods such as `sendTokens()`, `delegateTokens()`, `signAndBroadcast()`, etc. are also available:
+An instance of [`SigningAkashClient`](src/akash/signingAkashClient.ts), which extends [`SigningStargateClient`](https://github.com/cosmos/cosmjs/blob/main/packages/stargate/src/signingstargateclient.ts), is accessible from the instance of `Akash`. This means methods such as `sendTokens()`, `delegateTokens()`, `signAndBroadcast()`, etc. are also available:
 
 ```javascript
 const akash = await Akash.connect(RPC, offlineSigner);
 const signingClient = akash.signingClient;
 
-signClient.sendTokens(address, recipientAddress, amount, fee, memo);
+signingClient.sendTokens(address, recipientAddress, amount, fee, memo);
 ```
 
 # Note on HTTPS
