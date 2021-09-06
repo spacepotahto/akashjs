@@ -89,7 +89,7 @@ export interface SDLSpec {
   };
   profiles: {
     compute: {
-      [key: string]: { // Service Name
+      [key: string]: { // Profile Name
         resources: {
           cpu: {
             units: number | string,
@@ -111,7 +111,7 @@ export interface SDLSpec {
           anyOf?: string[]
         }
         pricing: {
-          [key: string]: { // Service Name
+          [key: string]: { // Profile Name
             denom: string,
             amount: number
           }
@@ -122,7 +122,7 @@ export interface SDLSpec {
   deployment: {
     [key: string]: { // Service Name
       [key: string]: { // Group Name
-        profile: string // Service Name
+        profile: string // Profile Name
         count: Service["Count"]
       }
     }
@@ -137,6 +137,7 @@ export class SDL {
   constructor(sdlString: string) {
     this.data = yaml.load(sdlString, { schema: DEFAULT_SCHEMA }) as SDLSpec;
 
+    // Maps services to group
     const groupServices: { [key: string]: string[] } = {};
     Object.keys(this.data.deployment).forEach((serviceName) => {
       Object.keys(this.data.deployment[serviceName]).forEach((groupName) => {
@@ -169,7 +170,8 @@ export class SDL {
           } : undefined
         },
         resources: serviceNames.map((serviceName) => {
-          const serviceComputeResources = this.data.profiles.compute[serviceName].resources;
+          const profileName = this.data.deployment[serviceName][groupName].profile;
+          const serviceComputeResources = this.data.profiles.compute[profileName].resources;
           const normalizedCPUUnit = this.normalizeCPUUnit(serviceComputeResources.cpu.units.toString());
           const normalizedMemoryUnit = this.normalizeMemoryStorageUnit(serviceComputeResources.memory.size);
           const normalizedStorageUnit = this.normalizeMemoryStorageUnit(serviceComputeResources.storage.size);
@@ -196,8 +198,8 @@ export class SDL {
           return {
             count: this.data.deployment[serviceName][groupName].count,
             price: {
-              denom: this.data.profiles.placement[groupName].pricing[serviceName].denom,
-              amount: this.data.profiles.placement[groupName].pricing[serviceName].amount.toString()
+              denom: this.data.profiles.placement[groupName].pricing[profileName].denom,
+              amount: this.data.profiles.placement[groupName].pricing[profileName].amount.toString()
             },
             resources: {
               cpu: {
@@ -230,7 +232,8 @@ export class SDL {
       this.manifest.push({
         Name: groupName,
         Services: serviceNames.map((serviceName) => {
-          const serviceComputeResources = this.data.profiles.compute[serviceName].resources;
+          const profileName = this.data.deployment[serviceName][groupName].profile;
+          const serviceComputeResources = this.data.profiles.compute[profileName].resources;
           const normalizedCPUUnit = this.normalizeCPUUnit(serviceComputeResources.cpu.units.toString());
           const normalizedMemoryUnit = this.normalizeMemoryStorageUnit(serviceComputeResources.memory.size);
           const normalizedStorageUnit = this.normalizeMemoryStorageUnit(serviceComputeResources.storage.size);
