@@ -3,8 +3,8 @@ set -o errexit -o nounset -o pipefail
 command -v shellcheck >/dev/null && shellcheck "$0"
 
 # In the proto directory:
-# git clone https://github.com/ovrclk/akash.git
-# git clone https://github.com/cosmos/cosmos-sdk.git
+# git clone https://github.com/ovrclk/akash.git (checkout version, e.g. git checkout v0.14.0)
+# git clone https://github.com/cosmos/cosmos-sdk.git (checkout version, e.g. git checkout v0.44.1)
 PROTOC_BIN="./protoc-3.17.3-osx-x86_64/bin/protoc"
 AKASH_PROTO_DIR="./proto/akash/proto"
 COSMOS_PROTO_DIR="./proto/cosmos-sdk/proto"

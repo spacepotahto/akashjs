@@ -128,28 +128,26 @@ class SDL {
                     const serviceExpose = this.data.services[serviceName].expose;
                     const flattenedExpose = [];
                     serviceExpose.forEach((expose) => {
-                        if (expose.to) {
-                            expose.to.forEach((to) => {
-                                flattenedExpose.push({
-                                    Port: expose.port,
-                                    ExternalPort: expose.as || 0,
-                                    Proto: "TCP",
-                                    Service: to.service || "",
-                                    Global: to.global || false,
-                                    Hosts: expose.accept || null
-                                });
-                            });
-                        }
-                        else {
+                        const exposeTo = expose.to || [{ service: "", global: false }];
+                        const exposeHTTPOptions = expose.http_options;
+                        exposeTo.forEach((to) => {
                             flattenedExpose.push({
                                 Port: expose.port,
                                 ExternalPort: expose.as || 0,
                                 Proto: "TCP",
-                                Service: "",
-                                Global: false,
-                                Hosts: expose.accept || null
+                                Service: to.service || "",
+                                Global: to.global || false,
+                                Hosts: expose.accept || null,
+                                HTTPOptions: {
+                                    MaxBodySize: (exposeHTTPOptions === null || exposeHTTPOptions === void 0 ? void 0 : exposeHTTPOptions.max_body_size) || 1048576,
+                                    ReadTimeout: (exposeHTTPOptions === null || exposeHTTPOptions === void 0 ? void 0 : exposeHTTPOptions.read_timeout) || 60000,
+                                    SendTimeout: (exposeHTTPOptions === null || exposeHTTPOptions === void 0 ? void 0 : exposeHTTPOptions.send_timeout) || 60000,
+                                    NextTries: (exposeHTTPOptions === null || exposeHTTPOptions === void 0 ? void 0 : exposeHTTPOptions.next_tries) || 3,
+                                    NextTimeout: (exposeHTTPOptions === null || exposeHTTPOptions === void 0 ? void 0 : exposeHTTPOptions.next_timeout) || 60000,
+                                    NextCases: (exposeHTTPOptions === null || exposeHTTPOptions === void 0 ? void 0 : exposeHTTPOptions.next_cases) || ["error", "timeout"]
+                                }
                             });
-                        }
+                        });
                     });
                     const service = this.data.services[serviceName];
                     return {

@@ -25,8 +25,17 @@ export interface ServiceExpose {
     Service: string;
     Global: boolean;
     Hosts: string[] | null;
+    HTTPOptions: ServiceExposeHTTPOptions;
 }
 export declare type ServiceProtocol = "TCP" | "UDP";
+export interface ServiceExposeHTTPOptions {
+    MaxBodySize: number;
+    ReadTimeout: number;
+    SendTimeout: number;
+    NextTries: number;
+    NextTimeout: number;
+    NextCases: ("error" | "timeout" | "403" | "404" | "429" | "500" | "502" | "503" | "504" | "off")[];
+}
 export interface ResourceUnits {
     cpu: CPU;
     memory: Memory;
@@ -66,6 +75,14 @@ export interface SDLSpec {
                     service?: ServiceExpose["Service"];
                     global?: ServiceExpose["Global"];
                 }[];
+                http_options?: {
+                    max_body_size?: ServiceExpose["HTTPOptions"]["MaxBodySize"];
+                    read_timeout?: ServiceExpose["HTTPOptions"]["ReadTimeout"];
+                    send_timeout?: ServiceExpose["HTTPOptions"]["SendTimeout"];
+                    next_tries?: ServiceExpose["HTTPOptions"]["NextTries"];
+                    next_timeout?: ServiceExpose["HTTPOptions"]["NextTimeout"];
+                    next_cases?: ServiceExpose["HTTPOptions"]["NextCases"];
+                };
             }[];
         };
     };

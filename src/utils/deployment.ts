@@ -36,9 +36,30 @@ export interface ServiceExpose {
   Service: string; // default ""
   Global: boolean; // default false
   Hosts: string[] | null;
+  HTTPOptions: ServiceExposeHTTPOptions;
 }
 
 export type ServiceProtocol = "TCP" | "UDP";
+
+export interface ServiceExposeHTTPOptions {
+  MaxBodySize: number; // default 1048576
+  ReadTimeout: number; // default 60000
+	SendTimeout: number; // default 60000
+	NextTries: number; // default 3
+	NextTimeout: number; // default 60000
+	NextCases: (
+    | "error"
+    | "timeout"
+    | "403"
+    | "404"
+    | "429"
+    | "500"
+    | "502"
+    | "503"
+    | "504"
+    | "off"
+  )[] // default ["error", "timeout"]
+}
 
 export interface ResourceUnits {
   cpu: CPU;
@@ -84,6 +105,14 @@ export interface SDLSpec {
           service?: ServiceExpose["Service"];
           global?: ServiceExpose["Global"];
         }[]
+        http_options?: {
+          max_body_size?: ServiceExpose["HTTPOptions"]["MaxBodySize"];
+          read_timeout?: ServiceExpose["HTTPOptions"]["ReadTimeout"];
+          send_timeout?: ServiceExpose["HTTPOptions"]["SendTimeout"];
+          next_tries?: ServiceExpose["HTTPOptions"]["NextTries"];
+          next_timeout?: ServiceExpose["HTTPOptions"]["NextTimeout"];
+          next_cases?: ServiceExpose["HTTPOptions"]["NextCases"];
+        }
       }[]
     }
   };
@@ -241,27 +270,26 @@ export class SDL {
           const serviceExpose = this.data.services[serviceName].expose;
           const flattenedExpose: ServiceExpose[] = [];
           serviceExpose.forEach((expose) => {
-            if (expose.to) {
-              expose.to.forEach((to) => {
-                flattenedExpose.push({
-                  Port: expose.port,
-                  ExternalPort: expose.as || 0,
-                  Proto: "TCP", // Looks like right now it's always TCP (http for 80, https for 443, tcp all others)
-                  Service: to.service || "",
-                  Global: to.global || false,
-                  Hosts: expose.accept || null
-                });
-              });
-            } else {
+            const exposeTo = expose.to || [{ service: "", global: false }];
+            const exposeHTTPOptions = expose.http_options;
+            exposeTo.forEach((to) => {
               flattenedExpose.push({
                 Port: expose.port,
                 ExternalPort: expose.as || 0,
                 Proto: "TCP", // Looks like right now it's always TCP (http for 80, https for 443, tcp all others)
-                Service: "",
-                Global: false,
-                Hosts: expose.accept || null
-              })
-            }
+                Service: to.service || "",
+                Global: to.global || false,
+                Hosts: expose.accept || null,
+                HTTPOptions: {
+                  MaxBodySize: exposeHTTPOptions?.max_body_size || 1048576,
+                  ReadTimeout: exposeHTTPOptions?.read_timeout || 60000,
+                  SendTimeout: exposeHTTPOptions?.send_timeout || 60000,
+                  NextTries: exposeHTTPOptions?.next_tries || 3,
+                  NextTimeout: exposeHTTPOptions?.next_timeout || 60000,
+                  NextCases: exposeHTTPOptions?.next_cases || ["error", "timeout"]
+                }
+              });
+            });
           })
 
           const service = this.data.services[serviceName];
